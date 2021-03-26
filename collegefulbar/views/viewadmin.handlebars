@@ -31,8 +31,35 @@
 
 <body>
     <section id="main" class="wrapper">
-        <div>
-            <h3>ADMIN ACCESS GRANTED</h3>
+        <div id="view" class="container">
+            <h2>ALL COURSES</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <th> Course Name </th>
+                        <th> Section </th>
+                        <th> Instructor </th>
+                        <th> Room </th>
+                        <th> Seats </th>
+                        <th> Credits </th>
+                        <th> Cost </th>
+                    </tr>
+                    {{#each items}}
+                    <tr>
+
+                        <td>{{this.name}}</td>
+                        <td>{{this.section}}</td>
+                        <td>{{this.instructor}}</td>
+                        <td>{{this.room}}</td>
+                        <td>{{this.seats}}</td>
+                        <td>{{this.credits}}</td>
+                        <td>{{this.cost}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
         </div>
     </section>
 </body>

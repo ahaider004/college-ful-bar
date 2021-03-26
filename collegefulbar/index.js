@@ -27,7 +27,7 @@ db.connect((error)=>{
 });                                           
 //------------------------------------------------
 
-//define middlewares and other usage 
+//define uses snd set views
 //----------------------------------------------------------------
 app.use(express.static('static'));                              
 app.use(session({secret: 'collegefulbar'}));                    
@@ -147,8 +147,7 @@ app.post('/auth/login', async (req,res)=>{
             console.log("Logging in the user ID is: " + req.session.user_id);       
             req.session.user_name = req.body.email;                                 
             console.log("Logging in the username is: " + req.session.user_name);    
-            if(account == "student" || account == "Student"){                       
-                //res.redirect("/student");                                        
+            if(account == "student" || account == "Student"){                                                              
                 res.redirect(`/user/${req.session.user_name}`);                     
             }                                                                                                               
             if(account == "admin" || account == "Admin"){                          
@@ -254,10 +253,6 @@ app.post('/drop/submit', async (req,res)=>{
 
 
 
-
-
-
-
 //function to let logged in student view classes
 //-----------------------------------------------------------------------------------------------------------------------
 app.get('/view', (req,res)=>{
@@ -282,6 +277,60 @@ app.post('/logout', async (req, res) => {
   res.redirect('/');                                                            
    });                                                                          
 //--------------------------------------------------------------------------------
+
+
+
+
+//+===========++++============
+// ADMIN WORK ================
+//+===========++++============
+
+//upon clicking add course
+//----------------------------------------------------
+
+app.get('/add',(req, res) => {                
+    res.render('addCourse');                            
+    }); 
+
+//-----------------------------------------------------
+
+//Enter the fields into table courses in the database
+//--------------------------------------------------------------------------------------------------------------------
+app.post('/add/submit', async (req,res)=>{  
+    const title = req.body.title;
+    const section = req.body.section;
+    const instructor = req.body.instructor;
+    const room = req.body.room;
+    const credits = req.body.credits;
+    const cost = req.body.cost;
+
+
+    db.query('INSERT INTO courses SET ?',{name:title, section: section, instructor: instructor, room:room, credits: credits, cost: cost},(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            console.log(results);
+            return res.render('addCourse',{
+                message: 'Course Has been Added'
+            });
+        }
+    });
+});
+//----------------------------------------------------------------------------------------------------------------------
+
+
+// Admin gets to see all the courses in the entire school
+//---------------when view course is pressed-----------------------
+app.get('/viewadmin', (req,res)=>{
+   
+    db.query("SELECT * FROM courses",function(err,rows,fields){
+        if(err) throw err;
+        console.log(rows);
+        res.render('viewadmin',{title: 'Classes',items: rows});
+    });
+});
+//-------------------------------------------------------------------
+
 
 //listen to a certain port on localhost to run the app
 //--------------------------------------------------------
