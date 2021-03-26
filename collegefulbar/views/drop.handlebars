@@ -1,0 +1,67 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Student</title>
+</head>
+<header>
+    <nav>
+        <h4>Collegefulbar</h4>
+        <ul>
+            <li><a href="/view"></a>View</li>
+            <li><a href="/enroll"></a>Enroll</li>
+            <li><a href="/drop"></a>Drop</li>
+            <li><a href="/grades"></a>Grades</li>
+            <form method="post">
+                <button formaction="/logout" class="pure-button button-small">logout</button></center>
+            </form>
+        </ul>
+    </nav>
+
+
+    <body>
+        <section id="main" class="wrapper">
+            <div id="drop" class="container">
+                <p>Drop Classes</p>
+                <div class="card-body">
+                    <form action="/drop/submit" method="POST">
+                        <div class="form-group">
+                            <label for="student_email">Email</label>
+                            <input type="email" class="form-control" id="student_email" name="student_email"
+                                placeholder="Re-enter Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Course Name</label>
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="Enter Course Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="section">Course Section</label>
+                            <input type="text" class="form-control" id="section" name="section" placeholder="section">
+                        </div>
+                        <div class="form-group">
+                            <label for="instructor">Professor</label>
+                            <input type="text" class="form-control" id="instructor" name="instructor"
+                                placeholder="instructor Name">
+                        </div>
+                        <button type="submit" class="btn btn-primary" onclick="myFunction()">Drop</button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+            <div class="container">
+            </div>
+        </section>
+
+        <script>
+            function myFunction() {
+                alert("Course Has been Dropped");
+            }
+        </script>
+    </body>
