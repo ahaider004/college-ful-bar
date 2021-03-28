@@ -105,6 +105,13 @@ app.get('/drop',(req, res) => {
 
 //-----------------------------------------------------
 
+//upon clicking grades render the grades html page
+//------------------------------------------------
+app.get('/grades',(req, res) => {                
+    res.render('studentgrades');                            
+    });                                             
+    //------------------------------------------------
+
 //if student account then render student handlebar material
 //------------------------------------------------------------
 app.get('/user/:email',(req, res) => { 
@@ -230,10 +237,9 @@ app.post('/enroll/submit', async (req,res)=>{
 //upon clicking drop the class the student wants to drop will be removed from database
 //--------------------------------------------------------------------------------------------------------------------
 app.post('/drop/submit', async (req,res)=>{  
-    const student_email = req.body.student_email;
+
     const title = req.body.title;
-    const section = req.body.section;
-    const instructor = req.body.instructor;
+
 
     db.query('DELETE FROM class WHERE title = ?', [title],(err,rows,fields) => {
         if(err){
@@ -294,6 +300,33 @@ app.get('/add',(req, res) => {
 
 //-----------------------------------------------------
 
+//upon clicking remove course render the remove html page
+//------------------------------------------------
+app.get('/remove',(req, res) => {                
+    res.render('removecourse');                            
+    });                                             
+//------------------------------------------------
+
+//upon clicking Remove in the page the class the admin wants to drop will be removed from database
+//--------------------------------------------------------------------------------------------------------------------
+app.post('/remove/submit', async (req,res)=>{  
+    const title = req.body.title;
+    db.query('DELETE FROM courses WHERE name = ?', [title],(err,rows,fields) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.log("Course has been deleted");
+            console.log(rows);
+             res.render('removecourse',{
+                message: 'Course Has been Deleted'
+                
+            });
+            res.redirect('/viewadmin');
+        }
+    });
+});
+//----------------------------------------------------------------------------------------------------------------------
+
 //Enter the fields into table courses in the database
 //--------------------------------------------------------------------------------------------------------------------
 app.post('/add/submit', async (req,res)=>{  
@@ -319,6 +352,86 @@ app.post('/add/submit', async (req,res)=>{
 //----------------------------------------------------------------------------------------------------------------------
 
 
+//upon clicking update course render the update html page
+//------------------------------------------------
+app.get('/update',(req, res) => {                
+    res.render('updatecourse');                            
+    });                                             
+//------------------------------------------------
+
+//-------------------------------once the user hits update--------------------------------------------
+app.post('/update/submit', async (req,res)=>{  
+   
+
+//Did not implement yet
+
+
+
+});
+//----------------------------------------------------------------------------------------------------------------------
+
+
+//upon clicking update course render the update html page
+//------------------------------------------------
+app.get('/addStudent',(req, res) => {                
+    res.render('addstudent');                            
+    });                                             
+//------------------------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------
+app.post('/addstudent/submit', async (req,res)=>{  
+    const name = req.body.name;
+    const age = req.body.age;
+    const email = req.body.email;
+    const credits = req.body.credits;
+    const registered = req.body.registered;
+    const probation = req.body.probation;
+    const advisor = req.body.advisor;
+    const enrollment = req.body.enrolldate;
+
+
+
+    db.query('INSERT INTO student SET ?',{name:name, age: age, email: email, credits:credits, registered: registered, probation: probation, advisor: advisor, enrolldate: enrollment},(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            console.log(results);
+            return res.render('addstudent',{
+                message: 'Student Has been Added'
+            });
+        }
+    });
+});
+//----------------------------------------------------------------------------------------------------------------------
+
+//upon clicking update course render the update html page
+//------------------------------------------------
+app.get('/delStudent',(req, res) => {                
+    res.render('deletestudent');                            
+    });                                             
+//------------------------------------------------
+
+//upon clicking Remove in the page the class the admin wants to drop will be removed from database
+//--------------------------------------------------------------------------------------------------------------------
+app.post('/deletestudent/submit', async (req,res)=>{  
+    const email = req.body.email;
+    db.query('DELETE FROM student WHERE email = ?', [email],(err,rows,fields) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.log("Student has been deleted");
+            console.log(rows);
+             res.render('deletestudent',{
+                message: 'student Has been Deleted'
+                
+            });
+            res.redirect('/viewadmin');
+        }
+    });
+});
+//----------------------------------------------------------------------------------------------------------------------
+
+
 // Admin gets to see all the courses in the entire school
 //---------------when view course is pressed-----------------------
 app.get('/viewadmin', (req,res)=>{
@@ -330,7 +443,39 @@ app.get('/viewadmin', (req,res)=>{
     });
 });
 //-------------------------------------------------------------------
+//allow admin to view all the students in the system 
+//set up a different table in database call student which is different from user 
+//will have to insert user student accounts into the student table as well to get a accurate table
+app.get('/viewStudents', (req,res)=>{
+   
+    db.query("SELECT * FROM student",function(err,rows,fields){
+        if(err) throw err;
+        console.log(rows);
+        res.render('viewstudents',{title: 'Students',items: rows});
+    });
+});
+//-------------------------------------------------------------------
 
+
+//upon clicking update student render the update student html page
+//------------------------------------------------
+app.get('/upStudent',(req, res) => {                
+    res.render('updatestudent');                            
+    });                                             
+//------------------------------------------------
+
+
+//-------------------------------once the admin hits update studet--------------------------------------------
+app.post('/updatestudent/submit', async (req,res)=>{  
+   
+
+    //Did not implement yet
+    
+    
+    
+    });
+    //----------------------------------------------------------------------------------------------------------------------
+    
 
 //listen to a certain port on localhost to run the app
 //--------------------------------------------------------

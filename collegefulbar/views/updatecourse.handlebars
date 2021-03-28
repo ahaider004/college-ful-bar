@@ -33,9 +33,10 @@
 <body>
     <section id="main" class="wrapper">
         <div id="enroll" class="container">
-            <p>Add Courses</p>
+            <p>Update Courses</p>
             <div class="card-body">
-                <form action="/add/submit" method="POST">
+                <form action="/update/submit" method="POST">
+                    <h1>ENTER NEW INFORMATION</h1>
                     <div class="form-group">
                         <label for="title">Course Name</label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="Enter Course Name">
@@ -63,7 +64,7 @@
                         <label for="cost">Cost</label>
                         <input type="number" class="form-control" id="cost" name="cost" placeholder="Total Cost">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Add</button>
+                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Update</button>
 
                 </form>
 
@@ -77,7 +78,7 @@
 
     <script>
         function myFunction() {
-            alert("Course Has been Added");
+            alert("Course Has been updated");
         }
     </script>
 </body>

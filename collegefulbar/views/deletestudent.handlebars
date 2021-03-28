@@ -32,10 +32,36 @@
 
 <body>
     <section id="main" class="wrapper">
-        <div>
-            <h3>ADMIN ACCESS GRANTED</h3>
+        <div id="enroll" class="container">
+            <p>Delete Student</p>
+            <div class="card-body">
+                <form action="/deletestudent/submit" method="POST">
+                    <div class="form-group">
+                        <label for="name">Student Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter student Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Student email">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Delete Student</button>
+
+                </form>
+
+
+            </div>
+
+        </div>
+        <div class="container">
         </div>
     </section>
+
+    <script>
+        function myFunction() {
+            alert("Student Has been Deleted");
+        }
+    </script>
 </body>
 
 </html>
