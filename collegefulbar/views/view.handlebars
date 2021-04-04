@@ -16,7 +16,6 @@
         <ul>
             <li><a href="/view"></a>View</li>
             <li><a href="/enroll"></a>Enroll</li>
-            <li><a href="/drop"></a>Drop</li>
             <li><a href="/grades"></a>Grades</li>
             <form method="post">
                 <button formaction="/logout" class="pure-button button-small">logout</button></center>
@@ -53,6 +52,7 @@
                         <td>{{this.semester}}</td>
                         <td>{{this.credits}}</td>
                         <td>{{this.cost}}</td>
+                        <td><a href="/delete/{{id}}">Drop Course</a></td>
                     </tr>
                     {{/each}}
                 </tbody>

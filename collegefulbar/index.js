@@ -90,19 +90,68 @@ app.get('/register',(req, res) => {
 //upon clicking enroll
 //----------------------------------------------------
 
-app.get('/enroll',(req, res) => {                
-    res.render('enroll');                            
+app.get('/enroll',(req, res) => {  
+    
+    db.query("SELECT * FROM courses" ,async function(err,rows,fields){
+        if(err) throw err;
+        console.log(rows);
+        res.render('enroll',{title: 'Courses',items: rows});
+    }); 
+    
+
     }); 
 
 //-----------------------------------------------------
 
+//-----------------ENROLL BUTTON----------------------------------------------
+app.get('/enroll/:id', function(req, res, next) {
+    var id= req.params.id;
+    
+
+        var sql = 'SELECT * FROM courses WHERE id = ?';
+        db.query(sql, [id], async function (err, data) {
+        if (err) throw err;
+        var title = data[0].name;
+        var section = data[0].section;
+        var instructor = data[0].instructor;
+        var dept = data[0].Department;
+        var year = data[0].Year;
+        var semester = data[0].Semester;
+        var credits = data[0].credits;
+        var cost = data[0].cost;
+        var student_email = req.session.user_name;
+        db.query('INSERT INTO class SET ?',{student_email: student_email, title:title, section: section, instructor: instructor, dept:dept, year:year,semester: semester, credits: credits, cost: cost},async (error,results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                console.log(results);
+                res.redirect('/view');
+            }
+    
+        });
+
+
+    });
+
+    
+    });
+
+
+//--------------------------------------------------------------------------------------------------------
+
 //upon clicking drop
 //----------------------------------------------------
 
-app.get('/drop',(req, res) => {                
-    res.render('drop');                            
-    }); 
-
+app.get('/delete/:id', function(req, res, next) {
+    var id= req.params.id;
+      var sql = 'DELETE FROM class WHERE id = ?';
+      db.query(sql, [id], function (err, data) {
+      if (err) throw err;
+      console.log(data.affectedRows + " record(s) updated");
+    });
+    res.redirect('/view');
+    
+  });
 //-----------------------------------------------------
 
 //upon clicking grades render the grades html page
@@ -193,7 +242,7 @@ app.post('/auth/register', async (req,res)=>{
         let hashedPassword = await bcrypt.hash(password, 8);
         console.log(hashedPassword);
         //insert into database
-        db.query('INSERT INTO user SET ?',{name: name, account: account, email: email, password: hashedPassword},(error,results)=>{
+        db.query('INSERT INTO user SET ?',{name: name, account: account, email: email, password: hashedPassword}, async (error, results)=>{
             if(error){
                 console.log(error);
             }else{
@@ -201,61 +250,24 @@ app.post('/auth/register', async (req,res)=>{
                 return res.redirect('/login');
             }
         });
+
+        db.query('INSERT INTO student SET ?',{name: name, email: email}, async (error, results)=>{
+            if(error){
+                console.log(error);
+            }else{
+                console.log(results);
+                return res.redirect('/login');
+            }
+        });
+
+        
     });
 });
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-//upon clicking enroll button after filling the form execue this query 
-//--------------------------------------------------------------------------------------------------------------------
-app.post('/enroll/submit', async (req,res)=>{  
-    const title = req.body.title;
-    const section = req.body.section;
-    const instructor = req.body.instructor;
-    const dept = req.body.dept;
-    const year = req.body.year;
-    const semester = req.body.semester;
-    const credits = req.body.credits;
-    const cost = req.body.cost;
-    const student_email = req.body.student_email;
 
-    db.query('INSERT INTO class SET ?',{student_email: student_email, title:title, section: section, instructor: instructor, dept:dept, year:year,semester: semester, credits: credits, cost: cost},(error,results)=>{
-        if(error){
-            console.log(error);
-        }else{
-            console.log(results);
-            return res.render('enroll',{
-                message: 'Course Has been Added'
-            });
-        }
-    });
-});
-//----------------------------------------------------------------------------------------------------------------------
-
-
-//upon clicking drop the class the student wants to drop will be removed from database
-//--------------------------------------------------------------------------------------------------------------------
-app.post('/drop/submit', async (req,res)=>{  
-
-    const title = req.body.title;
-
-
-    db.query('DELETE FROM class WHERE title = ?', [title],(err,rows,fields) => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log("Course has been deleted");
-            console.log(rows);
-             res.render('drop',{
-                message: 'Course Has been Deleted'
-                
-            });
-            res.redirect('/view');
-        }
-    });
-});
-//----------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -300,32 +312,25 @@ app.get('/add',(req, res) => {
 
 //-----------------------------------------------------
 
-//upon clicking remove course render the remove html page
-//------------------------------------------------
-app.get('/remove',(req, res) => {                
-    res.render('removecourse');                            
-    });                                             
-//------------------------------------------------
+
 
 //upon clicking Remove in the page the class the admin wants to drop will be removed from database
-//--------------------------------------------------------------------------------------------------------------------
-app.post('/remove/submit', async (req,res)=>{  
-    const title = req.body.title;
-    db.query('DELETE FROM courses WHERE name = ?', [title],(err,rows,fields) => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log("Course has been deleted");
-            console.log(rows);
-             res.render('removecourse',{
-                message: 'Course Has been Deleted'
-                
-            });
-            res.redirect('/viewadmin');
-        }
+//upon clicking drop
+//----------------------------------------------------
+
+app.get('/deleteCourse/:id', function(req, res, next) {
+    var id= req.params.id;
+      var del = 'DELETE courses, class FROM courses INNER JOIN class ON class.title = courses.name WHERE courses.id = ?';
+ 
+      db.query(del, [id], function (err, data) {
+      if (err) throw err;
+      console.log(data.affectedRows + " record(s) updated");
+
     });
-});
-//----------------------------------------------------------------------------------------------------------------------
+    res.redirect('/viewadmin');
+    
+  });
+//-----------------------------------------------------
 
 //Enter the fields into table courses in the database
 //--------------------------------------------------------------------------------------------------------------------
@@ -476,6 +481,9 @@ app.post('/updatestudent/submit', async (req,res)=>{
     });
     //----------------------------------------------------------------------------------------------------------------------
     
+
+
+
 
 //listen to a certain port on localhost to run the app
 //--------------------------------------------------------

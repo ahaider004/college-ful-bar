@@ -16,12 +16,10 @@
         <h4>Collegefulbar</h4>
         <ul>
             <li><a href="/add"></a>Add Course</li>
-            <li><a href="/remove"></a>Remove Course</li>
             <li><a href="/viewadmin"></a>View Courses</li>
             <li><a href="/update"></a>Update Course</li>
             <li><a href="/viewStudents"></a>View Students</li>
             <li><a href="/addStudent"></a>Add Students</li>
-            <li><a href="/delStudent"></a>Delete Students</li>
             <li><a href="/upStudent"></a>Update Students</li>
             <form method="post">
                 <button formaction="/logout" class="pure-button button-small">logout</button></center>
@@ -34,9 +32,8 @@
     <section id="main" class="wrapper">
         <div id="enroll" class="container">
             <p>Update Student</p>
-            <h1>ENTER NEW INFORMATION FOR STUDENT</h1>
             <div class="card-body">
-                <form action="/updatestudent/submit" method="POST">
+                <form action="/addstudent/submit" method="POST">
                     <div class="form-group">
                         <label for="name">Student Name</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter student Name">
@@ -87,7 +84,7 @@
 
     <script>
         function myFunction() {
-            alert("Student has been updated");
+            alert("Student Has been Added");
         }
     </script>
 </body>

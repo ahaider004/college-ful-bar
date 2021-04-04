@@ -16,12 +16,10 @@
         <h4>Collegefulbar</h4>
         <ul>
             <li><a href="/add"></a>Add Course</li>
-            <li><a href="/remove"></a>Remove Course</li>
             <li><a href="/viewadmin"></a>View Courses</li>
             <li><a href="/update"></a>Update Course</li>
             <li><a href="/viewStudents"></a>View Students</li>
             <li><a href="/addStudent"></a>Add Students</li>
-            <li><a href="/delStudent"></a>Delete Students</li>
             <li><a href="/upStudent"></a>Update Students</li>
             <form method="post">
                 <button formaction="/logout" class="pure-button button-small">logout</button></center>
@@ -44,6 +42,9 @@
                         <th> Seats </th>
                         <th> Credits </th>
                         <th> Cost </th>
+                        <th> Department </th>
+                        <th> Year </th>
+                        <th> Semester </th>
                     </tr>
                     {{#each items}}
                     <tr>
@@ -55,6 +56,11 @@
                         <td>{{this.seats}}</td>
                         <td>{{this.credits}}</td>
                         <td>{{this.cost}}</td>
+                        <td>{{this.Department}}</td>
+                        <td>{{this.Year}}</td>
+                        <td>{{this.Semester}}</td>
+                        <td><a href="/editCourse/{{id}}">Edit </a></td>
+                        <td><a href="/deleteCourse/{{id}}">Delete </a></td>
                     </tr>
                     {{/each}}
                 </tbody>

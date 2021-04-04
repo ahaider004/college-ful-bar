@@ -16,12 +16,10 @@
         <h4>Collegefulbar</h4>
         <ul>
             <li><a href="/add"></a>Add Course</li>
-            <li><a href="/remove"></a>Remove Course</li>
             <li><a href="/viewadmin"></a>View Courses</li>
             <li><a href="/update"></a>Update Course</li>
             <li><a href="/viewStudents"></a>View Students</li>
             <li><a href="/addStudent"></a>Add Students</li>
-            <li><a href="/delStudent"></a>Delete Students</li>
             <li><a href="/upStudent"></a>Update Students</li>
             <form method="post">
                 <button formaction="/logout" class="pure-button button-small">logout</button></center>
@@ -62,6 +60,19 @@
                     <div class="form-group">
                         <label for="cost">Cost</label>
                         <input type="number" class="form-control" id="cost" name="cost" placeholder="Total Cost">
+                    </div>
+                    <div class="form-group">
+                        <label for="Department">Department</label>
+                        <input type="text" class="form-control" id="Department" name="Department"
+                            placeholder="Department">
+                    </div>
+                    <div class="form-group">
+                        <label for="Year">Year</label>
+                        <input type="text" class="form-control" id="Year" name="Year" placeholder="Year">
+                    </div>
+                    <div class="form-group">
+                        <label for="Semester">Semester</label>
+                        <input type="number" class="form-control" id="Semester" name="Semester" placeholder="Semester">
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="myFunction()">Add</button>
 

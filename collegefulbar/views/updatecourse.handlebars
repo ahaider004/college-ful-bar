@@ -16,12 +16,10 @@
         <h4>Collegefulbar</h4>
         <ul>
             <li><a href="/add"></a>Add Course</li>
-            <li><a href="/remove"></a>Remove Course</li>
             <li><a href="/viewadmin"></a>View Courses</li>
             <li><a href="/update"></a>Update Course</li>
             <li><a href="/viewStudents"></a>View Students</li>
             <li><a href="/addStudent"></a>Add Students</li>
-            <li><a href="/delStudent"></a>Delete Students</li>
             <li><a href="/upStudent"></a>Update Students</li>
             <form method="post">
                 <button formaction="/logout" class="pure-button button-small">logout</button></center>
@@ -35,8 +33,7 @@
         <div id="enroll" class="container">
             <p>Update Courses</p>
             <div class="card-body">
-                <form action="/update/submit" method="POST">
-                    <h1>ENTER NEW INFORMATION</h1>
+                <form action="/add/submit" method="POST">
                     <div class="form-group">
                         <label for="title">Course Name</label>
                         <input type="text" class="form-control" id="title" name="title" placeholder="Enter Course Name">
@@ -64,7 +61,20 @@
                         <label for="cost">Cost</label>
                         <input type="number" class="form-control" id="cost" name="cost" placeholder="Total Cost">
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Update</button>
+                    <div class="form-group">
+                        <label for="Department">Department</label>
+                        <input type="text" class="form-control" id="Department" name="Department"
+                            placeholder="Department">
+                    </div>
+                    <div class="form-group">
+                        <label for="Year">Year</label>
+                        <input type="text" class="form-control" id="Year" name="Year" placeholder="Year">
+                    </div>
+                    <div class="form-group">
+                        <label for="Semester">Semester</label>
+                        <input type="number" class="form-control" id="Semester" name="Semester" placeholder="Semester">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="myFunction()">Add</button>
 
                 </form>
 
@@ -78,7 +88,7 @@
 
     <script>
         function myFunction() {
-            alert("Course Has been updated");
+            alert("Course Has been Added");
         }
     </script>
 </body>
